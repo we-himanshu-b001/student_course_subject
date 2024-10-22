@@ -58,7 +58,7 @@ console.log(store);
                      header="Subject">
 
                  <template #body="prop">
-                     {{prop.data.subject_id}}
+                     {{prop.data.subject_name?.name}}
                  </template>
 
              </Column>

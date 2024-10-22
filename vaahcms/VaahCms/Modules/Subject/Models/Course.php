@@ -205,7 +205,7 @@ class Course extends VaahModel
 
         $sort = explode(':', $sort);
 
-        return $query::with(['subject_name'])->orderBy($sort[0], $sort[1]);
+        return $query->orderBy($sort[0], $sort[1]);
     }
     //-------------------------------------------------
     public function scopeIsActiveFilter($query, $filter)
@@ -274,6 +274,7 @@ class Course extends VaahModel
         $list->isActiveFilter($request->filter);
         $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
+        $list->with(['subject_name']);
 
         $rows = config('vaahcms.per_page');
 
@@ -450,7 +451,7 @@ class Course extends VaahModel
     public function subject_name(){
         return $this->belongsTo(Subject::class,
             'subject_id', 'id'
-        )->select('name');
+        )->select('id', 'name');
     }
     //-------------------------------------------------
     public static function getItem($id)
