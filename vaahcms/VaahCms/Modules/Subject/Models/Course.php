@@ -14,7 +14,7 @@ class Course extends VaahModel
 {
 
     use SoftDeletes;
-    use CrudWithUuidObservantTrait;
+//    use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
     protected $table = 'new_course';
@@ -26,10 +26,9 @@ class Course extends VaahModel
     ];
     //-------------------------------------------------
     protected $fillable = [
-        'uuid',
         'name',
-        'slug',
-        'is_active',
+        'class',
+        'subject_id',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -54,7 +53,6 @@ class Course extends VaahModel
     public static function getUnFillableColumns()
     {
         return [
-            'uuid',
             'created_by',
             'updated_by',
             'deleted_by',
@@ -82,7 +80,7 @@ class Course extends VaahModel
             $empty_item[$column] = null;
         }
 
-        $empty_item['is_active'] = 1;
+//        $empty_item['is_active'] = 1;
 
         return $empty_item;
     }
@@ -167,14 +165,14 @@ class Course extends VaahModel
         }
 
         // check if slug exist
-        $item = self::where('slug', $inputs['slug'])->withTrashed()->first();
+//        $item = self::where('slug', $inputs['slug'])->withTrashed()->first();
 
-        if ($item) {
-            $error_message = "This slug is already exist".($item->deleted_at?' in trash.':'.');
-            $response['success'] = false;
-            $response['messages'][] = $error_message;
-            return $response;
-        }
+//        if ($item) {
+//            $error_message = "This slug is already exist".($item->deleted_at?' in trash.':'.');
+//            $response['success'] = false;
+//            $response['messages'][] = $error_message;
+//            return $response;
+//        }
 
         $item = new self();
         $item->fill($inputs);
@@ -207,7 +205,7 @@ class Course extends VaahModel
 
         $sort = explode(':', $sort);
 
-        return $query->orderBy($sort[0], $sort[1]);
+        return $query::with(['subject_name'])->orderBy($sort[0], $sort[1]);
     }
     //-------------------------------------------------
     public function scopeIsActiveFilter($query, $filter)
@@ -448,12 +446,18 @@ class Course extends VaahModel
 
         return $response;
     }
+
+    public function subject_name(){
+        return $this->belongsTo(Subject::class,
+            'subject_id', 'id'
+        )->select('name');
+    }
     //-------------------------------------------------
     public static function getItem($id)
     {
 
         $item = self::where('id', $id)
-            ->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
+            ->with(['createdByUser', 'updatedByUser', 'deletedByUser','subject_name'])
             ->withTrashed()
             ->first();
 
@@ -492,16 +496,16 @@ class Course extends VaahModel
          }
 
          // check if slug exist
-         $item = self::where('id', '!=', $id)
-             ->withTrashed()
-             ->where('slug', $inputs['slug'])->first();
-
-         if ($item) {
-             $error_message = "This slug is already exist".($item->deleted_at?' in trash.':'.');
-             $response['success'] = false;
-             $response['errors'][] = $error_message;
-             return $response;
-         }
+//         $item = self::where('id', '!=', $id)
+//             ->withTrashed()
+//             ->where('slug', $inputs['slug'])->first();
+//
+//         if ($item) {
+//             $error_message = "This slug is already exist".($item->deleted_at?' in trash.':'.');
+//             $response['success'] = false;
+//             $response['errors'][] = $error_message;
+//             return $response;
+//         }
 
         $item = self::where('id', $id)->withTrashed()->first();
         $item->fill($inputs);
@@ -564,7 +568,8 @@ class Course extends VaahModel
 
         $rules = array(
             'name' => 'required|max:150',
-            'slug' => 'required|max:150',
+            'class' => 'required',
+            'subject_id' => 'required'
         );
 
         $validator = \Validator::make($inputs, $rules);

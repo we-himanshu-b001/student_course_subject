@@ -4,7 +4,7 @@ import { useCourseStore } from '../../../stores/store-courses'
 
 const store = useCourseStore();
 const useVaah = vaah();
-
+console.log(store);
 </script>
 
 <template>

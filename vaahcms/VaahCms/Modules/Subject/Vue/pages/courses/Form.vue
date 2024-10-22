@@ -18,8 +18,12 @@ onMounted(async () => {
             && route.params && route.params.id)
     {
         await store.getItem(route.params.id);
-    }
 
+    }
+    await sub.getList();
+    if (!store.item.subject_id && sub.list.data.length > 0) {
+        store.item.subject_id = store.item.subject_id;
+    }
     await store.getFormMenu();
 });
 
@@ -28,7 +32,7 @@ const form_menu = ref();
 const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
-console.log(sub);
+// console.log(sub);
 //--------/form_menu
 
 </script>
@@ -105,8 +109,6 @@ console.log(sub);
                     </Button>
                 </div>
 
-
-
             </template>
 
 
@@ -151,34 +153,54 @@ console.log(sub);
 
                 <VhField label="Class">
                     <div class="p-inputgroup">
-                        <InputText class="w-full"
-                                   placeholder="Enter the Class"
-                                   name="courses-class"
-                                   data-testid="courses-class"
-                                   v-model="store.item.class" required/>
+<!--                        <InputNumber class="w-full"-->
+<!--                                   placeholder="Enter the Class"-->
+<!--                                   name="courses-class"-->
+<!--                                   data-testid="courses-class"-->
+<!--                                   v-model="store.item.class" required/>-->
+                        <InputNumber class="w-full" name="courses-class" data-testid="courses-class" placeholder="Enter the Class" v-model="store.item.class" inputId="minmax" :min="1" :max="12" mode="decimal" fluid required/>
                         <div class="required-field hidden"></div>
                     </div>
                 </VhField>
 
                 <VhField label="Subject">
                     <div class="p-inputgroup">
-                        <select
-                            class="w-full p-inputtext"
-                            name="courses-subject"
-                            data-testid="courses-subject"
-                            v-model="store.item.subject" required>
-                           <Dropdown>
-
-                           </Dropdown>
-<!--                            <option v-for="subject in sub.item.data"-->
-<!--                                :key="subject.id"-->
-<!--                                :value="subject.id">-->
-<!--                                {{ subject.name }}-->
-<!--                            </option>-->
+                        <select v-if="sub.list && sub.list.data"
+                                class="w-full p-inputtext"
+                                name="courses-subject"
+                                data-testid="courses-subject"
+                                v-model="store.item.subject_id" required>
+                            <option v-for="option in sub.list.data" :key="option.id" :value="option.id">
+                                {{ option.name }}
+                            </option>
                         </select>
                         <div class="required-field hidden"></div>
                     </div>
                 </VhField>
+
+
+                <!--                <VhField label="Subject">-->
+<!--                    <div class="p-inputgroup">-->
+<!--                        <select v-if="sub.item"-->
+<!--                            class="w-full p-inputtext"-->
+<!--                            name="courses-subject"-->
+<!--                            data-testid="courses-subject"-->
+<!--                            v-model="store.item.subject_id" required>-->
+<!--                            <option v-for="option in sub.item.data" :key="option.id" :value="option.id">-->
+<!--                                {{ option.name }}-->
+<!--                            </option>-->
+<!--&lt;!&ndash;                           <Dropdown>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                           </Dropdown>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option v-for="subject in sub.item.data"&ndash;&gt;-->
+<!--&lt;!&ndash;                                :key="subject.id"&ndash;&gt;-->
+<!--&lt;!&ndash;                                :value="subject.id">&ndash;&gt;-->
+<!--&lt;!&ndash;                                {{ subject.name }}&ndash;&gt;-->
+<!--&lt;!&ndash;                            </option>&ndash;&gt;-->
+<!--                        </select>-->
+<!--                        <div class="required-field hidden"></div>-->
+<!--                    </div>-->
+<!--                </VhField>-->
 
 
 
