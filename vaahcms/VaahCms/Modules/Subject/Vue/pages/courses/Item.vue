@@ -125,7 +125,7 @@ const toggleItemMenu = (event) => {
                         || column === 'deleted_by' || column ==='subject_id'">
                         </template>
 
-                        <template v-else-if="column === 'id' || column === 'uuid'">
+                        <template v-else-if="column === 'id'">
                             <VhViewRow :label="column"
                                        :value="value"
                                        :can_copy="true"
@@ -149,7 +149,7 @@ const toggleItemMenu = (event) => {
 
                         <template v-else-if="column === 'subject_name'">
                             <VhViewRow :label="column"
-                                       :value="value.name"
+                                       :value="value ? value.name : ''"
                             />
                         </template>
 

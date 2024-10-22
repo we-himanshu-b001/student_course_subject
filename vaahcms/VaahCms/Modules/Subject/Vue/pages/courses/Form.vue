@@ -22,7 +22,8 @@ onMounted(async () => {
     }
     await sub.getList();
     if (!store.item.subject_id && sub.list.data.length > 0) {
-        store.item.subject_id = sub.item.subject_id;
+        if(sub.item)
+            store.item.subject_id = sub.item.data.subject_id;
     }
     await store.getFormMenu();
 });

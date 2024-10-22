@@ -678,18 +678,18 @@ export const useCourseStore = defineStore({
         async getListSelectedMenu()
         {
             this.list_selected_menu = [
-                {
-                    label: 'Activate',
-                    command: async () => {
-                        await this.updateList('activate')
-                    }
-                },
-                {
-                    label: 'Deactivate',
-                    command: async () => {
-                        await this.updateList('deactivate')
-                    }
-                },
+                // {
+                //     label: 'Activate',
+                //     command: async () => {
+                //         await this.updateList('activate')
+                //     }
+                // },
+                // {
+                //     label: 'Deactivate',
+                //     command: async () => {
+                //         await this.updateList('deactivate')
+                //     }
+                // },
                 {
                     separator: true
                 },
@@ -721,18 +721,18 @@ export const useCourseStore = defineStore({
         getListBulkMenu()
         {
             this.list_bulk_menu = [
-                {
-                    label: 'Mark all as active',
-                    command: async () => {
-                        await this.confirmAction('activate-all','Mark all as active');
-                    }
-                },
-                {
-                    label: 'Mark all as inactive',
-                    command: async () => {
-                        await this.confirmAction('deactivate-all','Mark all as inactive');
-                    }
-                },
+                // {
+                //     label: 'Mark all as active',
+                //     command: async () => {
+                //         await this.confirmAction('activate-all','Mark all as active');
+                //     }
+                // },
+                // {
+                //     label: 'Mark all as inactive',
+                //     command: async () => {
+                //         await this.confirmAction('deactivate-all','Mark all as inactive');
+                //     }
+                // },
                 {
                     separator: true
                 },

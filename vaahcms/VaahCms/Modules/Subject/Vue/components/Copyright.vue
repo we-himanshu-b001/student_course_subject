@@ -8,18 +8,18 @@
     </p>
 
 
-    <p>
-      <small>
-        App v{{root.assets.versions.app_version}}
-        | Laravel v{{root.assets.versions.laravel_version}}
-        | PHP v{{root.assets.versions.php_version}}
-        |
-        <a :href="root.assets.vaahcms.website" target="_blank">{{root.assets.vaahcms.name}}</a>
-        v{{root.assets.versions.vaahcms_version}}
-        | <a :href="root.assets.vaahcms.docs" target="_blank">Documentation</a>
+<!--    <p>-->
+<!--      <small>-->
+<!--        App v{{root.assets.versions.app_version}}-->
+<!--        | Laravel v{{root.assets.versions.laravel_version}}-->
+<!--        | PHP v{{root.assets.versions.php_version}}-->
+<!--        |-->
+<!--        <a :href="root.assets.vaahcms.website" target="_blank">{{root.assets.vaahcms.name}}</a>-->
+<!--        v{{root.assets.versions.vaahcms_version}}-->
+<!--        | <a :href="root.assets.vaahcms.docs" target="_blank">Documentation</a>-->
 
-      </small>
-    </p>
+<!--      </small>-->
+<!--    </p>-->
 
   </div>
 </template>
