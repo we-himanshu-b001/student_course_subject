@@ -4,7 +4,7 @@ import { useSubjectStore } from '../../../stores/store-subjects'
 
 const store = useSubjectStore();
 const useVaah = vaah();
-console.log(store);
+
 </script>
 
 <template>
