@@ -288,7 +288,6 @@ class Subject extends VaahModel
 
         $response['success'] = true;
         $response['data'] = $list;
-
         return $response;
 
 

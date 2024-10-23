@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {onMounted, ref, watch,computed} from "vue";
 import { useCourseStore } from '../../stores/store-courses';
 import { useSubjectStore } from '../../stores/store-subjects';
 
@@ -20,21 +20,31 @@ onMounted(async () => {
         await store.getItem(route.params.id);
 
     }
-    await sub.getList();
-    if (!store.item.subject_id && sub.list.data.length > 0) {
-        if(sub.item)
-            store.item.subject_id = sub.item.data.subject_id;
-    }
+    // await sub.getList();
+    // if (!store.item.subject_id && sub.list.data.length > 0) {
+    //     if(sub.item)
+    //         store.item.subject_id = sub.item.data.subject_id;
+    // }
     await store.getFormMenu();
+
 });
+const sub_id = computed({
+    get() {
+        return Number(store.item.subject_id);  // Cast to number when getting
+    },
+    set(value) {
+        store.item.subject_id = value;
+    }
+});
+
 
 //--------form_menu
 const form_menu = ref();
 const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
-// console.log(sub);
 //--------/form_menu
+
 
 </script>
 <template>
@@ -159,6 +169,7 @@ const toggleFormMenu = (event) => {
 <!--                                   name="courses-class"-->
 <!--                                   data-testid="courses-class"-->
 <!--                                   v-model="store.item.class" required/>-->
+
                         <InputNumber class="w-full" name="courses-class" data-testid="courses-class" placeholder="Enter the Class" v-model="store.item.class" inputId="minmax" :min="1" :max="12" mode="decimal" fluid required/>
                         <div class="required-field hidden"></div>
                     </div>
@@ -166,18 +177,16 @@ const toggleFormMenu = (event) => {
 
                 <VhField label="Subject">
                     <div class="p-inputgroup">
-                        <select v-if="sub.list && sub.list.data"
-                                class="w-full p-inputtext"
-                                name="courses-subject"
-                                data-testid="courses-subject"
-                                v-model="store.item.subject_id" required>
-                            <option v-for="option in sub.list.data" :key="option.id" :value="option.id">
-                                {{ option.name }}
-                            </option>
-                        </select>
-                        <div class="required-field hidden"></div>
+
+                        <Dropdown
+                            filter
+                            v-model="sub_id"
+                                  :options="store.assets.subject_list"
+                                  optionLabel="name" optionValue="id" placeholder="Select a Subject" class="w-full md:w-14rem" />
                     </div>
                 </VhField>
+
+
 
 
                 <!--                <VhField label="Subject">-->

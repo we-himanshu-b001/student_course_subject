@@ -41,7 +41,7 @@ const useVaah = vaah();
 
             </Column>
 
-             <Column field="class" v-if="store.isViewLarge()"
+             <Column field="class"
                      :sortable="true"
                      style="width:100px;"
                      header="Class">
@@ -52,7 +52,7 @@ const useVaah = vaah();
 
              </Column>
 
-             <Column field="subject" v-if="store.isViewLarge()"
+             <Column field="subject"
                      :sortable="true"
                      style="width:100px;"
                      header="Subject">

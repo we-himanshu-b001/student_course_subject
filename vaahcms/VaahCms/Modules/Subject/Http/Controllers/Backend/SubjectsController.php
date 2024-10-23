@@ -30,7 +30,6 @@ class SubjectsController extends Controller
             $data['fillable']['columns'] = Subject::getFillableColumns();
             $data['fillable']['except'] = Subject::getUnFillableColumns();
             $data['empty_item'] = Subject::getEmptyItem();
-
             $data['actions'] = [];
 
             $response['success'] = true;

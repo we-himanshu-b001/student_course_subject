@@ -622,6 +622,7 @@ class Course extends VaahModel
             'model_namespace' => self::class,
             'except' => self::getUnFillableColumns()
         ]);
+
         $fillable = VaahSeeder::fill($request);
         if(!$fillable['success']){
             return $fillable;

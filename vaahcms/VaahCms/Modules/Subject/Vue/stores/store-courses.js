@@ -374,6 +374,7 @@ export const useCourseStore = defineStore({
                 case 'create-and-close':
                 case 'create-and-clone':
                     options.method = 'POST';
+                    // item.subject_id = this.item.subject_name?.id;
                     options.params = item;
                     break;
 
