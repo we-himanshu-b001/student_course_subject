@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use VaahCms\Modules\Subject\Models\Course;
 use VaahCms\Modules\Subject\Models\Subject;
+use WebReinvent\VaahCms\Models\Taxonomy;
 
 
 class CoursesController extends Controller
@@ -32,6 +33,7 @@ class CoursesController extends Controller
             $data['fillable']['except'] = Course::getUnFillableColumns();
             $data['empty_item'] = Course::getEmptyItem();
             $data['subject_list'] = Subject::all();
+            $data['subjects'] = Taxonomy::getTaxonomyByType('subject');
             $data['actions'] = [];
 
             $response['success'] = true;

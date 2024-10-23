@@ -4,13 +4,12 @@ import { useSubjectStore } from '../../../stores/store-subjects'
 
 const store = useSubjectStore();
 const useVaah = vaah();
-
+// console.log(store);
 </script>
 
 <template>
-
-    <div v-if="store.list">
-         <DataTable :value="store.list.data"
+    <div v-if="store.list && store.list.length">
+         <DataTable :value="store.list"
                    dataKey="id"
                    :rowClass="store.setRowClass"
                    class="p-datatable-sm p-datatable-hoverable-rows"
@@ -18,7 +17,7 @@ const useVaah = vaah();
                    v-model:selection="store.action.items"
                    stripedRows
                    responsiveLayout="scroll">
-
+<!--{{store.list.data}}-->
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
                     headerStyle="width: 3em">
@@ -26,13 +25,13 @@ const useVaah = vaah();
 
             <Column field="id" header="ID" :style="{width: '80px'}" :sortable="true">
             </Column>
-
+<!--    {{store.list}}-->
             <Column field="name" header="Name"
                     class="overflow-wrap-anywhere"
                     :sortable="true">
 
                 <template #body="prop">
-                    <Badge v-if="prop.data.deleted_at"
+                    <Badge v-if="prop.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
                     {{prop.data.name}}
@@ -62,7 +61,7 @@ const useVaah = vaah();
                                  data-testid="subjects-table-is-active"
                                  v-bind:false-value="0"  v-bind:true-value="1"
                                  class="p-inputswitch-sm"
-                                 @input="store.toggleIsActive(prop.data)">
+                                 @input="store.toggleIsActive(prop)">
                     </InputSwitch>
                 </template>
 
@@ -78,19 +77,19 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="subjects-table-to-view"
                                 v-tooltip.top="'View'"
-                                @click="store.toView(prop.data)"
+                                @click="store.toView(prop)"
                                 icon="pi pi-eye" />
 
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="subjects-table-to-edit"
                                 v-tooltip.top="'Update'"
-                                @click="store.toEdit(prop.data)"
+                                @click="store.toEdit(prop)"
                                 icon="pi pi-pencil" />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 data-testid="subjects-table-action-trash"
                                 v-if="store.isViewLarge() && !prop.data.deleted_at"
-                                @click="store.itemAction('trash', prop.data)"
+                                @click="store.itemAction('trash', prop)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash" />
 
@@ -98,7 +97,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 data-testid="subjects-table-action-restore"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
-                                @click="store.itemAction('restore', prop.data)"
+                                @click="store.itemAction('restore', prop)"
                                 v-tooltip.top="'Restore'"
                                 icon="pi pi-replay" />
 

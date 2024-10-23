@@ -181,7 +181,7 @@ const toggleFormMenu = (event) => {
                         <Dropdown
                             filter
                             v-model="sub_id"
-                                  :options="store.assets.subject_list"
+                                  :options="store.assets.subjects"
                                   optionLabel="name" optionValue="id" placeholder="Select a Subject" class="w-full md:w-14rem" />
                     </div>
                 </VhField>

@@ -3,11 +3,15 @@
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use VaahCms\Modules\Subject\Models\Subject;
+use WebReinvent\VaahCms\Models\Taxonomy;
 
 
 class SubjectsController extends Controller
 {
-
+    public function taxo(){
+        $taxonomy_type = 'subject';
+        return Taxonomy::getTaxonomyByType($taxonomy_type);
+    }
 
     //----------------------------------------------------------
     public function __construct()
@@ -19,7 +23,7 @@ class SubjectsController extends Controller
 
     public function getAssets(Request $request)
     {
-
+//        dd($this->taxo());
         try{
 
             $data = [];
@@ -53,7 +57,9 @@ class SubjectsController extends Controller
     public function getList(Request $request)
     {
         try{
-            return Subject::getList($request);
+            $response['data'] = Taxonomy::getTaxonomyByType('subject');
+            return $response;
+//            return Subject::getList($request);
         }catch (\Exception $e){
             $response = [];
             $response['success'] = false;
